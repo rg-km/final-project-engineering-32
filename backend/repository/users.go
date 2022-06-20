@@ -16,7 +16,7 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 func (u *UserRepository) FetchUserByID(id int64) (User, error) {
 	//beginanswer
 	var user User
-	err := u.db.QueryRow("SELECT * FROM users WHERE id = ?", id).Scan(&user.ID, &user.Username, &user.Password, &user.Password, &user.Role, &user.Loggedin, &user.Token)
+	err := u.db.QueryRow("SELECT * FROM users WHERE id = ?", id).Scan(&user.ID, &user.Username, &user.Password, &user.Password, &user.Role)
 	if err != nil {
 		return user, err
 	}
@@ -35,7 +35,7 @@ func (u *UserRepository) FetchUsers() ([]User, error) {
 	var users []User
 	for rows.Next() {
 		var user User
-		err := rows.Scan(&user.ID, &user.Username, &user.Password, &user.Role, &user.Loggedin)
+		err := rows.Scan(&user.ID, &user.Username, &user.Password, &user.Role)
 		if err != nil {
 			return nil, err
 		}

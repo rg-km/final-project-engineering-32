@@ -34,37 +34,10 @@ CREATE TABLE IF NOT EXISTS peminjaman (
 	id_buku INTEGER,
 	id_user INTEGER,
 	tgl_pinjam TEXT,
+    tgl_kembali TEXT,
 	CONSTRAINT peminjaman_FK FOREIGN KEY (id_user) REFERENCES "user"(id_user) ON DELETE CASCADE,
 	CONSTRAINT peminjaman_FK_1 FOREIGN KEY (id_buku) REFERENCES buku(id_buku) ON DELETE CASCADE
-);
-
-// CREATE TABLE IF NOT EXISTS sales (
-//     id integer not null primary key AUTOINCREMENT,
-//     date DATE not null,
-//     product_id integer not null,
-//     quantity integer not null,
-//     FOREIGN KEY (product_id) REFERENCES products(id)
-// );
-
-// INSERT INTO users(username, password, role, loggedin) VALUES
-//     ('aditira', '1234', 'admin', false),
-//     ('dina', '4321', 'employee', false),
-//     ('dito', '2552', 'employee', false);
-
-INSERT INTO products(product_name, category, price, quantity) VALUES
-    ('Orange', 'Fruits', 5000, 100),
-    ('Apple', 'Fruits', 2000, 100),
-    ('Melon', 'Fruits', 4000, 100),
-    ('Watermelon', 'Fruits', 10000, 100),
-    ('Banana', 'Fruits', 4000, 100),
-    ('Carrot', 'Vegetables', 2000, 100),
-    ('Broccoli', 'Vegetables', 5200, 100),
-    ('Cucumber', 'Vegetables', 3400, 100),
-    ('Potato', 'Vegetables', 6500, 100),
-    ('Tomato', 'Vegetables', 2200, 100),
-    ('Coffee', 'Drink', 4300, 100),
-    ('Milk', 'Drink', 4000, 100),
-    ('Tea', 'Drink', 2700, 100);`)
+);`)
 
 	if err != nil {
 		panic(err)

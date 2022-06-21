@@ -1,4 +1,4 @@
-# Cashier App
+# Perpustakaan App
 
 ## Requirements
 

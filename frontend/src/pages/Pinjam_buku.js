@@ -1,19 +1,20 @@
 import React, {useState, Link} from 'react';
-import { Col,Row,Form,Button } from 'react-bootstrap'
+import { Col,Row,Form,Button, Container } from 'react-bootstrap'
 
 function Pinjam_buku() {
 
     return (
-      
+  
 <Form>
+<Container>
   <Row className="mb-3">
     <Form.Group as={Col} controlId="formGridEmail">
-      <Form.Label>Email</Form.Label>
+      <Form.Label>Tgl Peminjaman</Form.Label>
       <Form.Control type="Tgl Peminjaman" placeholder="Enter Date" />
     </Form.Group>
 
     <Form.Group as={Col} controlId="formGridPassword">
-      <Form.Label>Password</Form.Label>
+      <Form.Label>Tgl Kembali</Form.Label>
       <Form.Control type="Tgl Kembali" placeholder="Enter Date" />
     </Form.Group>
   </Row>
@@ -45,8 +46,10 @@ function Pinjam_buku() {
   <Button variant="primary" type="simpan">
     Submit
   </Button>
+  </Container>
 </Form>
 
     )
+    
 }
 export default Pinjam_buku;

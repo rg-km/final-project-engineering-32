@@ -10,7 +10,11 @@ type BukuListErrorResponse struct {
 }
 
 type Bukujson struct {
+	// ID_buku    string `json:"id_buku"`
+	// Pengarang string `json:"pengarang"`
 	Judul_buku string `json:"judul_buku"`
+	// Tahun_terbit string `json:"tahun_terbit"`
+	// No_Buku string `json:"no_buku"`
 }
 
 type BukuListSuccessResponse struct {

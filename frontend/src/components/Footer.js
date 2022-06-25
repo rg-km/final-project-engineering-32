@@ -8,65 +8,50 @@ Container,
 FooterLink,
 Heading,
 } from "./FooterStyles";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Footer = () => {
 return (
 	<Box>
-	<Container>
-		<Row >
+		<Row xs={4} className="">
 		<Column>
-			<Heading>About Us</Heading>
-			<FooterLink href="#">Aim</FooterLink>
-			<FooterLink href="#">Vision</FooterLink>
-			<FooterLink href="#">Testimonials</FooterLink>
-		</Column>
-		<Column>
-			<Heading>Services</Heading>
-			<FooterLink href="#">Writing</FooterLink>
-			<FooterLink href="#">Internships</FooterLink>
-			<FooterLink href="#">Coding</FooterLink>
-			<FooterLink href="#">Teaching</FooterLink>
-		</Column>
-		{/* <Column>
-			<Heading>Contact Us</Heading>
-			<FooterLink href="#">Uttar Pradesh</FooterLink>
-			<FooterLink href="#">Ahemdabad</FooterLink>
-			<FooterLink href="#">Indore</FooterLink>
-			<FooterLink href="#">Mumbai</FooterLink>
-		</Column> */}
-		<Column>
-			<Heading>Social Media</Heading>
 			<FooterLink href="#">
-			<i className="fab fa-facebook-f">
+			<FontAwesomeIcon icon="fa-brands fa-facebook-f" />
 				<span style={{ marginLeft: "5px" }}>
-				Facebook
+				Budaya Baca
 				</span>
-			</i>
 			</FooterLink>
+		</Column>
+		<Column>
 			<FooterLink href="#">
+			<FontAwesomeIcon icon="coffee" />
 			<i className="fab fa-instagram">
 				<span style={{ marginLeft: "5px" }}>
-				Instagram
+				@budaya_baca
 				</span>
 			</i>
 			</FooterLink>
+		</Column>
+		<Column>
 			<FooterLink href="#">
 			<i className="fab fa-twitter">
 				<span style={{ marginLeft: "5px" }}>
-				Twitter
+				budaya_baca
 				</span>
 			</i>
 			</FooterLink>
+		</Column>
+		<Column>
 			<FooterLink href="#">
+			<FontAwesomeIcon icon={['fab', 'apple']} />
 			<i className="fab fa-youtube">
 				<span style={{ marginLeft: "5px" }}>
-				Youtube
+				Budaya Baca
 				</span>
 			</i>
 			</FooterLink>
 		</Column>
 		</Row>
-	</Container>
     </Box>
 );
 };

@@ -19,6 +19,8 @@ function App() {
           <Route path="/pinjamBuku" element={<Pinjam_buku />}/>
         </Routes>
       </div>
+    <br />
+    <br />
     <Footer />
     </>
   );

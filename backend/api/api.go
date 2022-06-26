@@ -8,22 +8,24 @@ import (
 )
 
 type API struct {
-	usersRepo repository.UserRepository
-	bukuRepo  repository.BukuRepository
-	// cartItemRepo    repository.CartItemRepository
+	usersRepo      repository.UserRepository
+	bukuRepo       repository.BukuRepository
+	peminjamanRepo repository.PeminjamanRepository
 	// transactionRepo repository.TransactionRepository
 	// salesRepo       repository.SalesRepository
 	mux *http.ServeMux
 }
 
-func NewAPI(usersRepo repository.UserRepository, bukuRepo repository.BukuRepository) API {
+func NewAPI(usersRepo repository.UserRepository, bukuRepo repository.BukuRepository, peminjamanRepo repository.PeminjamanRepository) API {
 	mux := http.NewServeMux()
 	api := API{
-		usersRepo, bukuRepo, mux,
+		usersRepo, bukuRepo, peminjamanRepo, mux,
 	}
 
 	mux.Handle("/api/user/login", api.POST(http.HandlerFunc(api.login)))
 	mux.Handle("/api/user/logout", api.POST(http.HandlerFunc(api.logout)))
+	mux.Handle("/api/user/register", api.POST(http.HandlerFunc(api.register)))
+	mux.Handle("/api/peminjaman/insert", api.POST(http.HandlerFunc(api.InsertPeminjaman)))
 
 	// API with AuthMiddleware:
 	mux.Handle("/api/buku", http.HandlerFunc(api.bukuList))

@@ -6,15 +6,15 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type PeminjamananRepository struct {
+type PeminjamanRepository struct {
 	db *sql.DB
 }
 
-func NewPeminjamanRepository(db *sql.DB) *PeminjamananRepository {
-	return &PeminjamananRepository{db: db}
+func NewPeminjamanRepository(db *sql.DB) *PeminjamanRepository {
+	return &PeminjamanRepository{db: db}
 }
 
-func (bk *PeminjamananRepository) GetListPeminjaman() ([]Peminjaman, error) {
+func (bk *PeminjamanRepository) GetListPeminjaman() ([]Peminjaman, error) {
 	var sqlStatement string
 	var Lending []Peminjaman
 
@@ -47,4 +47,20 @@ func (bk *PeminjamananRepository) GetListPeminjaman() ([]Peminjaman, error) {
 	}
 	return Lending, nil
 	//endanswer return []CartItem{}, nil
+
+}
+
+func (u *PeminjamanRepository) InsertPeminjaman(id_buku int64, id_user int64, tgl_pinjam string, tgl_kembali string) (int64, error) {
+	//beginanswer
+	res, err := u.db.Exec("INSERT INTO peminjaman (id_buku, id_user, tgl_pinjam, tgl_kembali) VALUES (?, ?, ?, ?)",
+		id_buku, id_user, tgl_pinjam, tgl_kembali)
+	if err != nil {
+		return 0, err
+	}
+	id_pinjam, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+	return id_pinjam, nil
+	//endanswer return nil
 }

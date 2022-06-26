@@ -10,11 +10,11 @@ type BukuListErrorResponse struct {
 }
 
 type Bukujson struct {
-	// ID_buku    string `json:"id_buku"`
-	// Pengarang string `json:"pengarang"`
-	Judul_buku string `json:"judul_buku"`
-	// Tahun_terbit string `json:"tahun_terbit"`
-	// No_Buku string `json:"no_buku"`
+	ID_buku      int64  `json:"id_buku"`
+	Pengarang    string `json:"pengarang"`
+	Judul_buku   string `json:"judul_buku"`
+	Tahun_terbit int    `json:"tahun_terbit"`
+	No_Buku      string `json:"no_buku"`
 }
 
 type BukuListSuccessResponse struct {
@@ -42,7 +42,11 @@ func (api *API) bukuList(w http.ResponseWriter, req *http.Request) {
 
 	for _, book := range books {
 		response.Books = append(response.Books, Bukujson{
-			Judul_buku: book.JudulBuku,
+			ID_buku:      book.ID,
+			Pengarang:    book.Pengarang,
+			Judul_buku:   book.JudulBuku,
+			Tahun_terbit: book.TahunTerbit,
+			No_Buku:      book.NoBuku,
 		})
 	}
 

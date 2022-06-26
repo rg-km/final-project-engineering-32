@@ -15,6 +15,7 @@ type Bukujson struct {
 	Judul_buku   string `json:"judul_buku"`
 	Tahun_terbit int    `json:"tahun_terbit"`
 	No_Buku      string `json:"no_buku"`
+	List_Buku    string `json:"list_buku"`
 }
 
 type BukuListSuccessResponse struct {
@@ -47,6 +48,7 @@ func (api *API) bukuList(w http.ResponseWriter, req *http.Request) {
 			Judul_buku:   book.JudulBuku,
 			Tahun_terbit: book.TahunTerbit,
 			No_Buku:      book.NoBuku,
+			List_Buku:    book.ListBuku,
 		})
 	}
 

@@ -8,7 +8,7 @@ import (
 
 // Run This Script for migration db
 func main() {
-	db, err := sql.Open("sqlite3", "backend/db/perpustakaan.db")
+	db, err := sql.Open("sqlite3", "./db/perpustakaan.db")
 	if err != nil {
 		panic(err)
 	}

@@ -32,9 +32,9 @@
 # How to run service
 
 Run the following code in the terminal:
-1. Migration: run `main.go` inside directory `backend\database\assigment\cashier-app\db\migration` to Migration database SQLite
+1. Migration: run `main.go` inside directory `db\migration` to Migration database SQLite
 ```
-go run backend\database\assigment\cashier-app\db\migration\main.go
+go run db\migration\main.go
 ```
 
 2. Main: run `main.go` inside directory `backend\database\assigment\cashier-app` to running main Service

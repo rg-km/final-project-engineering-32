@@ -13,6 +13,7 @@ type Buku struct {
 	JudulBuku   string `db:"judul_buku"`
 	TahunTerbit int    `db:"tahun_terbit"`
 	NoBuku      string `db:"no_buku"`
+	ListBuku    string `db:"list_buku"`
 }
 
 type Peminjaman struct {

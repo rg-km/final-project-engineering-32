@@ -56,9 +56,9 @@ func (u *UserRepository) Login(username string, password string) (*string, error
 	//endanswer return nil, nil
 }
 
-func (u *UserRepository) InsertUser(username string, password string, role string, loggedin bool) error {
+func (u *UserRepository) InsertUser(username string, password string, role string) error {
 	//beginanswer
-	_, err := u.db.Exec("INSERT INTO users (username, password, role) VALUES (?, ?, ?, ?)", username, password, loggedin, role)
+	_, err := u.db.Exec("INSERT INTO user (username, password, role) VALUES (?, ?, ?)", username, password, role)
 	if err != nil {
 		return err
 	}

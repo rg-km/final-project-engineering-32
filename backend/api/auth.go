@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
@@ -11,6 +12,16 @@ import (
 type User struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+}
+
+type RegisterRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Role     string `json:"role"`
+}
+
+type RegisterRespone struct {
+	Message string `json:"message"`
 }
 
 type LoginSuccessResponse struct {
@@ -31,6 +42,26 @@ type Claims struct {
 	Username string
 	Role     string
 	jwt.StandardClaims
+}
+
+func (api *API) register(w http.ResponseWriter, req *http.Request) {
+	api.AllowOrigin(w, req)
+	var registerRequest RegisterRequest
+	err := json.NewDecoder(req.Body).Decode(&registerRequest)
+	if err != nil {
+		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	err = api.usersRepo.InsertUser(registerRequest.Username, registerRequest.Password, registerRequest.Role)
+	if err != nil {
+		log.Fatal(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	json.NewEncoder(w).Encode(RegisterRespone{
+		Message: "berhasil ditambahkan",
+	})
 }
 
 func (api *API) login(w http.ResponseWriter, req *http.Request) {

@@ -69,7 +69,7 @@ func (u *UserRepository) InsertUser(username string, password string, role strin
 func (u *UserRepository) FetchUserRole(username string) (*string, error) {
 	//beginanswer
 	var user User
-	err := u.db.QueryRow("SELECT role FROM users WHERE username = ?", username).Scan(&user.Role)
+	err := u.db.QueryRow("SELECT role FROM user WHERE username = ?", username).Scan(&user.Role)
 	if err != nil {
 		return nil, err
 	}

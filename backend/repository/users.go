@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"errors"
 )
 
 type UserRepository struct {
@@ -50,7 +49,7 @@ func (u *UserRepository) Login(username string, password string) (*string, error
 	var user User
 	err := u.db.QueryRow("SELECT username FROM users WHERE username = ? AND password = ?", username, password).Scan(&user.Username)
 	if err != nil {
-		return nil, errors.New("Login Failed")
+		return nil, err
 	}
 	return &user.Username, nil
 	//endanswer return nil, nil

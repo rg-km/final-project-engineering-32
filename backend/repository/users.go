@@ -47,7 +47,8 @@ func (u *UserRepository) FetchUsers() ([]User, error) {
 func (u *UserRepository) Login(username string, password string) (*string, error) {
 	//beginanswer
 	var user User
-	err := u.db.QueryRow("SELECT username FROM user WHERE username = ? AND password = ?", username, password).Scan(&user.Username)
+	row := u.db.QueryRow("SELECT username FROM user WHERE username = ? AND password = ?", username, password)
+	err := row.Scan(&user.Username)
 	if err != nil {
 		return nil, err
 	}

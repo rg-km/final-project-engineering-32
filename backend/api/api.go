@@ -11,9 +11,7 @@ type API struct {
 	usersRepo      repository.UserRepository
 	bukuRepo       repository.BukuRepository
 	peminjamanRepo repository.PeminjamanRepository
-	// transactionRepo repository.TransactionRepository
-	// salesRepo       repository.SalesRepository
-	mux *http.ServeMux
+	mux            *http.ServeMux
 }
 
 func NewAPI(usersRepo repository.UserRepository, bukuRepo repository.BukuRepository, peminjamanRepo repository.PeminjamanRepository) API {
@@ -27,14 +25,11 @@ func NewAPI(usersRepo repository.UserRepository, bukuRepo repository.BukuReposit
 	mux.Handle("/api/user/register", api.POST(http.HandlerFunc(api.register)))
 	mux.Handle("/api/peminjaman/insert", api.POST(http.HandlerFunc(api.InsertPeminjaman)))
 
-	// API with AuthMiddleware:
 	mux.Handle("/api/buku", http.HandlerFunc(api.bukuList))
-	// mux.Handle("/api/cart/add", api.POST(api.AuthMiddleWare(http.HandlerFunc(api.addToCart))))
-	// mux.Handle("/api/cart/clear", api.GET(api.AuthMiddleWare(http.HandlerFunc(api.clearCart))))
-	// mux.Handle("/api/carts", api.GET(api.AuthMiddleWare(http.HandlerFunc(api.cartList))))
-	// mux.Handle("/api/pay", api.POST(api.AuthMiddleWare(http.HandlerFunc(api.pay))))
 
-	// API with AuthMiddleware and AdminMiddleware
+	// API with AuthMiddleware:
+	mux.Handle("/api/buku/add", api.POST(api.AuthMiddleWare(http.HandlerFunc(api.addNewBuku))))
+	// mux.Handle("/api/buku/delete", api.DELETE(api.AuthMiddleWare(http.HandlerFunc(api.deleteBuku))))
 
 	return api
 }

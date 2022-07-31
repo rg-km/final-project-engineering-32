@@ -28,7 +28,8 @@ func (bk *BukuRepository) GetListBuku() ([]Buku, error) {
 		pengarang,
 		judul_buku,
 		tahun_terbit,
-		no_buku
+		no_buku,
+		list_buku,
 	FROM  buku`
 	rows, err := bk.db.Query(sqlStatement)
 	if err != nil {
@@ -39,107 +40,50 @@ func (bk *BukuRepository) GetListBuku() ([]Buku, error) {
 
 	for rows.Next() {
 		var buku Buku
-		err := rows.Scan(&buku.ID, &buku.Pengarang, &buku.JudulBuku, &buku.TahunTerbit, &buku.NoBuku)
+		err := rows.Scan(&buku.ID, &buku.Pengarang, &buku.JudulBuku, &buku.TahunTerbit, &buku.NoBuku, &buku.ListBuku)
 		if err != nil {
 			return nil, err
 		}
 		books = append(books, buku)
 	}
 	return books, nil
-	//endanswer return []CartItem{}, nil
 }
 
-// func (c *Buku) buku(productID int64) (buku, error) {
-// 	var Buku buku
-// 	var sqlStatement string
-// 	//TODO : you must fetch the cart by product id
-// 	//HINT : you can use the where statement
-// 	//beginanswer
-// 	sqlStatement = `
-// 	SELECT
-// 	c.id_buku,
-// 	c.pengarang,
-// 	c.judul_buku,
-// 	p.tahun_terbit,
-// 	p.no_buku
-// 	FROM cart_items c
-// 	INNER JOIN products p
-// 	ON c.product_id = p.id
-// 	WHERE c.product_id = ?
-// 	`
+func (c *BukuRepository) AddNewBuku(pengarang string, judul_buku string, tahun_terbit int, no_buku string, list_buku string) (*string, error) {
 
-// 	err := c.db.QueryRow(sqlStatement, productID).Scan(&cartItem.ID, &cartItem.ProductID, &cartItem.Quantity, &cartItem.Category, &cartItem.ProductName, &cartItem.Price)
-// 	if err != nil {
-// 		return cartItem, err
-// 	}
+	sqlStatement := `INSERT INTO buku (pengarang, judul_buku, tahun_terbit, no_buku, list_buku) VALUES (?, ?, ?, ?, ?)`
 
-// 	return cartItem, nil
-// 	//endanswer return CartItem{}, nil
-// }
+	_, err := c.db.Exec(sqlStatement, pengarang, judul_buku, tahun_terbit, no_buku, list_buku)
+	if err != nil {
+		return nil, err
+	}
+	return &judul_buku, nil
+}
 
-// func (c *CartItemRepository) InsertCartItem(cartItem CartItem) error {
-// 	// TODO: you must insert the cart item
-// 	//beginanswer
-// 	sqlStatement := `
-// 	INSERT INTO cart_items (product_id, quantity)
-// 	VALUES (?, ?)
-// 	`
-// 	_, err := c.db.Exec(sqlStatement, cartItem.ProductID, cartItem.Quantity)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// 	//endanswer return nil
-// }
+func (c *BukuRepository) DeleteBuku(id int) (bool, error) {
+	sqlStatement := `DELETE from buku WHERE id_buku = ?`
 
-// func (c *CartItemRepository) IncrementCartItemQuantity(cartItem CartItem) error {
-// 	//TODO : you must update the quantity of the cart item
-// 	//beginanswer
-// 	sqlStatement := `
-// 	UPDATE cart_items
-// 	SET quantity = quantity + 1
-// 	WHERE id = ?
-// 	`
-// 	_, err := c.db.Exec(sqlStatement, cartItem.ID)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// 	//endanswer return nil
-// }
+	_, err := c.db.Exec(sqlStatement, id)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
 
-// func (c *CartItemRepository) ResetCartItems() error {
-// 	//TODO : you must reset the cart items
-// 	//HINT : you can use the delete statement
-// 	//beginanswer
-// 	sqlStatement := `
-// 	DELETE FROM cart_items
-// 	`
-// 	_, err := c.db.Exec(sqlStatement)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// 	//endanswer return nil
-// }
+func (bk *BukuRepository) CheckIfProductExists(id int) (bool, error) {
+	var sqlStatement string
+	var books Buku
 
-// func (c *CartItemRepository) TotalPrice() (int, error) {
-// 	var sqlStatement string
-// 	//TODO : you must calculate the total price of the cart items
-// 	//HINT : you can use the sum statement
-// 	//beginanswer
-// 	sqlStatement = `
-// 	SELECT
-// 	    SUM(p.price * c.quantity)
-// 	FROM cart_items c
-// 	INNER JOIN products p
-// 	ON c.product_id = p.id
-// `
-// 	var totalPrice int
-// 	err := c.db.QueryRow(sqlStatement).Scan(&totalPrice)
-// 	if err != nil {
-// 		return 0, err
-// 	}
-// 	return totalPrice, nil
-// 	//endanswer return 0, nil
-// }
+	sqlStatement = `
+	SELECT
+		*
+	FROM buku WHERE id_buku = ? `
+	err := bk.db.QueryRow(sqlStatement, id).Scan(
+		&books.ID,
+	)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}

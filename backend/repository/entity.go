@@ -24,24 +24,6 @@ type Peminjaman struct {
 	TanggalKembali string `db:"tgl_kembali"`
 }
 
-// type Sales struct {
-// 	ID          int64     `db:"id"`
-// 	Date        time.Time `db:"date"`
-// 	Category    string    `db:"category"`
-// 	ProductID   int64     `db:"product_id"`
-// 	ProductName string    `db:"product_name"`
-// 	Price       int       `db:"price"`
-// 	Quantity    int       `db:"quantity"`
-// 	Total       int       `db:"total"`
-// }
-
-// type GetSalesRequest struct {
-// 	StartPeriod *time.Time `db:"start_period"`
-// 	EndPeriod   *time.Time `db:"end_period"`
-// 	ProductID   int64      `db:"product_id"`
-// 	ProductName string     `db:"product_name"`
-// }
-
 func (r *Peminjaman) IsEmptyRequest() bool {
 	if r.IdBuku == 0 && r.IdUser == 0 && r.TanggalPinjam == "" {
 		return true

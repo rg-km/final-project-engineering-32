@@ -121,3 +121,17 @@ func (api *API) POST(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
+
+func (api *API) DELETE(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		api.AllowOrigin(w, r)
+		encoder := json.NewEncoder(w)
+		if r.Method != http.MethodDelete {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+			encoder.Encode(AuthErrorResponse{Error: "Need DELETE Method!"})
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}

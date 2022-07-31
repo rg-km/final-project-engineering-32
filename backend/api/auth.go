@@ -33,11 +33,8 @@ type AuthErrorResponse struct {
 	Error string `json:"error"`
 }
 
-// Jwt key yang akan dipakai untuk membuat signature
 var jwtKey = []byte("key")
 
-// Struct claim digunakan sebagai object yang akan di encode oleh jwt
-// jwt.StandardClaims ditambahkan sebagai embedded type untuk provide standart claim yang biasanya ada pada JWT
 type Claims struct {
 	Username string
 	Role     string
@@ -74,21 +71,21 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 	}
 
 	res, err := api.usersRepo.Login(user.Username, user.Password)
+	println("test ", res)
 
 	w.Header().Set("Content-Type", "application/json")
+
 	encoder := json.NewEncoder(w)
+	print("tsthhh")
 	if err != nil {
+		print("test2")
 		w.WriteHeader(http.StatusUnauthorized)
 		encoder.Encode(AuthErrorResponse{Error: err.Error()})
 		return
 	}
 
 	userRole, _ := api.usersRepo.FetchUserRole(*res)
-
-	// Deklarasi expiry time untuk token jwt
 	expirationTime := time.Now().Add(60 * time.Minute)
-
-	// Buat claim menggunakan variable yang sudah didefinisikan diatas
 	claims := &Claims{
 		Username: *res,
 		Role:     *userRole,
@@ -97,18 +94,17 @@ func (api *API) login(w http.ResponseWriter, req *http.Request) {
 			ExpiresAt: expirationTime.Unix(),
 		},
 	}
+	print("test5")
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	// Buat jwt string dari token yang sudah dibuat menggunakan JWT key yang telah dideklarasikan
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
-		// return internal error ketika ada kesalahan ketika pembuatan JWT string
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	print("test5")
 
-	// Set token string kedalam cookie response
 	http.SetCookie(w, &http.Cookie{
 		Name:    "token",
 		Value:   tokenString,
@@ -125,11 +121,9 @@ func (api *API) logout(w http.ResponseWriter, req *http.Request) {
 	token, err := req.Cookie("token")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			// return unauthorized ketika token kosong
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
-		// return bad request ketika field token tidak ada
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS buku (
     pengarang text(255) not null,
     judul_buku text(255) not null,
     tahun_terbit integer not null,
-    no_buku text not null
+    no_buku text not null,
+	list_buku text not null
 );
 
 CREATE TABLE IF NOT EXISTS peminjaman (
